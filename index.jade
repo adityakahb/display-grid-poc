@@ -1,0 +1,18 @@
+doctype html
+html(lang="en")
+  head
+    title="DG"
+    meta(charset="UTF-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    link(href=`normalize.css` rel=`stylesheet`)
+    link(href=`index.css` rel=`stylesheet`)
+  body
+    .main
+      each grid in grids
+        .dg_container
+          each container in grid.container
+            .dg_row
+              each row in container.row
+                div(class=`${row.col}`)
+        br
+        br

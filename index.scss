@@ -1,0 +1,66 @@
+@import './rem';
+
+$grid-breakpoints: (
+  xs: 0,
+  sm: rem(576px),
+  md: rem(768px),
+  lg: rem(992px),
+  xl: rem(1200px),
+  xxl: rem(1696px)
+);
+
+$grid-columns:                12;
+$grid-gutter-width:           rem(16px);
+$grid-row-columns:            6;
+
+.dg_container {
+  padding-right: $grid-gutter-width / 2;
+  padding-left: $grid-gutter-width / 2;
+}
+
+.dg_row {
+  display: grid;
+  grid-template-columns: repeat($grid-columns, auto [col-start]);
+  margin-right: -1 * ($grid-gutter-width / 2);
+  margin-left: -1 * ($grid-gutter-width / 2);
+}
+
+@each $bp, $val in $grid-breakpoints {
+  // @if $bp == 'xs' {
+  //   .dg_col {
+  //     grid-column-start: auto;
+  //     // grid-column-end: span auto; 
+  //   }
+  // } @else {
+  //   .dg_col-#{$bp} {
+  //     grid-column-start: auto;
+  //     // grid-column-end: span auto;
+  //   }
+  // }
+  @for $col from 1 through $grid-columns {
+    @if $bp == 'xs' {
+      .dg_col-#{$col} {
+        grid-column-end: span #{$col};
+      }
+    } @else {
+      // .dg_col-#{$bp}-#{$col} {
+      //   grid-column-end: span #{$col};
+      // }
+    }
+  }
+  @if $val != 0 {
+    @media (min-width: #{$val}) {
+      @for $col from 1 through $grid-columns {
+        @if $bp == 'xs' {
+          .dg_col-#{$col} {
+            grid-column-end: span #{$col};
+          }
+        } @else {
+          .dg_col-#{$bp}-#{$col} {
+            grid-column-end: span #{$col};
+          }
+        }
+      } 
+    }
+  }
+}

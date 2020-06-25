@@ -1,0 +1,23 @@
+{
+  "name": "display-grid-poc",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dg": "node-sass --include-path scss index.scss index.css"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adityakahb/display-grid-poc.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/adityakahb/display-grid-poc/issues"
+  },
+  "homepage": "https://github.com/adityakahb/display-grid-poc#readme",
+  "dependencies": {
+    "jade": "^1.11.0",
+    "node-sass": "^4.14.1"
+  }
+}
