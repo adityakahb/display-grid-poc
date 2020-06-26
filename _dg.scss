@@ -8,10 +8,10 @@
   grid-template-columns: repeat($grid-columns, auto [col-start]);
   margin-right: -1 * ($grid-gutter-width / 2);
   margin-left: -1 * ($grid-gutter-width / 2);
-  column-gap: $grid-gutter-width;
-  &.no-gutter {
-    column-gap: 0;
-  }
+  // column-gap: $grid-gutter-width;
+  // &.no-gutter {
+  //   column-gap: 0;
+  // }
 }
 
 .dgrow-fill {
@@ -19,10 +19,10 @@
   grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
   margin-right: -1 * ($grid-gutter-width / 2);
   margin-left: -1 * ($grid-gutter-width / 2);
-  column-gap: $grid-gutter-width;
-  &.no-gutter {
-    column-gap: 0;
-  }
+  // column-gap: $grid-gutter-width;
+  // &.no-gutter {
+  //   column-gap: 0;
+  // }
 }
 
 @mixin genAllDG() {
@@ -53,23 +53,37 @@
   }
   #{$allDG} {
     box-sizing: border-box;
-    // padding-left: $grid-gutter-width / 2;
-    // padding-right: $grid-gutter-width / 2;
+    padding-left: $grid-gutter-width / 2;
+    padding-right: $grid-gutter-width / 2;
     position: relative;
     width: 100%;
   }
 }
 
-@include genAllDG();
-
+// @include genAllDG();
+div[class^="dgcol"] {
+  box-sizing: border-box;
+  padding-left: $grid-gutter-width / 2;
+  padding-right: $grid-gutter-width / 2;
+  position: relative;
+  width: 100%;
+}
 @each $bp, $val in $grid-breakpoints {
   @for $end from 1 through $grid-columns {
     @if $bp == 'xs' {
+      // .grspan-#{$end} {
+      //   grid-row: auto / span #{$end};
+      // }
       .dgcol-#{$end} {
         grid-column: auto / span #{$end};
       }
-      @for $start from 1 through ($grid-columns - 1) {
+      @for $start from 1 through $grid-columns {
         @if ($start + $end) <= $grid-columns {
+          .grspan-#{$start}-#{$end} {
+            grid-row: #{$start} / span #{$end};
+          }
+        }
+        @if ($start + $end) <= ($grid-columns + 1) {
           .dgcol-#{$start}-#{$end} {
             grid-column: #{$start} / span #{$end};
           }
@@ -81,11 +95,19 @@
     @media (min-width: #{$val}) {
       @for $end from 1 through $grid-columns {
         @if $bp != 'xs' {
+          // .grspan-#{$bp}-#{$end} {
+          //   grid-row: auto / span #{$end};
+          // }
           .dgcol-#{$bp}-#{$end} {
             grid-column: auto / span #{$end};
           }
-          @for $start from 1 through ($grid-columns - 1) {
+          @for $start from 1 through $grid-columns {
             @if ($start + $end) <= $grid-columns {
+              .grspan-#{$bp}-#{$start}-#{$end} {
+                grid-row: #{$start} / span #{$end};
+              }
+            }
+            @if ($start + $end) <= ($grid-columns + 1) {
               .dgcol-#{$bp}-#{$start}-#{$end} {
                 grid-column: #{$start} / span #{$end};
               }
