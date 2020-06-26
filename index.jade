@@ -9,9 +9,9 @@ html(lang="en")
   body
     .main
       each grid in grids
-        .dg_container
+        .dgcon
           each container in grid.container
-            .dg_row
+            div(class=`dgrow${grid.type}`)
               each row in container.row
                 div(class=`${row.col}`)
         br

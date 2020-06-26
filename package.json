@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dg": "node-sass --include-path scss index.scss index.css"
+    "dg": "node-sass --include-path scss index.scss index.css",
+    "grids": "node jadescript"
   },
   "repository": {
     "type": "git",

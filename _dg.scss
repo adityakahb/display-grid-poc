@@ -1,0 +1,98 @@
+.dgcon {
+  padding-right: $grid-gutter-width / 2;
+  padding-left: $grid-gutter-width / 2;
+}
+
+.dgrow {
+  display: grid;
+  grid-template-columns: repeat($grid-columns, auto [col-start]);
+  margin-right: -1 * ($grid-gutter-width / 2);
+  margin-left: -1 * ($grid-gutter-width / 2);
+  column-gap: $grid-gutter-width;
+  &.no-gutter {
+    column-gap: 0;
+  }
+}
+
+.dgrow-fill {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+  margin-right: -1 * ($grid-gutter-width / 2);
+  margin-left: -1 * ($grid-gutter-width / 2);
+  column-gap: $grid-gutter-width;
+  &.no-gutter {
+    column-gap: 0;
+  }
+}
+
+@mixin genAllDG() {
+  $allDG: ();
+  @each $bp, $val in $grid-breakpoints {
+    @if $bp == 'xs' {
+      $allDG: append($allDG, unquote(".dgcol"), comma);
+    } @else {
+      $allDG: append($allDG, unquote(".dgcol-#{$bp}"), comma);
+    }
+    @for $end from 1 through $grid-columns {
+      @if $bp == 'xs' {
+        $allDG: append($allDG, unquote(".dgcol-#{$end}"), comma);
+        @for $start from 1 through ($grid-columns - 1) {
+          @if ($start + $end) <= $grid-columns {
+            $allDG: append($allDG, unquote(".dgcol-#{$start}-#{$end}"), comma);
+          }
+        }
+      } @else {
+        $allDG: append($allDG, unquote(".dgcol-#{$bp}-#{$end}"), comma);
+        @for $start from 1 through ($grid-columns - 1) {
+          @if ($start + $end) <= $grid-columns {
+            $allDG: append($allDG, unquote(".dgcol-#{$bp}-#{$start}-#{$end}"), comma);
+          }
+        }
+      }
+    }
+  }
+  #{$allDG} {
+    box-sizing: border-box;
+    // padding-left: $grid-gutter-width / 2;
+    // padding-right: $grid-gutter-width / 2;
+    position: relative;
+    width: 100%;
+  }
+}
+
+@include genAllDG();
+
+@each $bp, $val in $grid-breakpoints {
+  @for $end from 1 through $grid-columns {
+    @if $bp == 'xs' {
+      .dgcol-#{$end} {
+        grid-column: auto / span #{$end};
+      }
+      @for $start from 1 through ($grid-columns - 1) {
+        @if ($start + $end) <= $grid-columns {
+          .dgcol-#{$start}-#{$end} {
+            grid-column: #{$start} / span #{$end};
+          }
+        }
+      }
+    }
+  }
+  @if $val != 0 {
+    @media (min-width: #{$val}) {
+      @for $end from 1 through $grid-columns {
+        @if $bp != 'xs' {
+          .dgcol-#{$bp}-#{$end} {
+            grid-column: auto / span #{$end};
+          }
+          @for $start from 1 through ($grid-columns - 1) {
+            @if ($start + $end) <= $grid-columns {
+              .dgcol-#{$bp}-#{$start}-#{$end} {
+                grid-column: #{$start} / span #{$end};
+              }
+            }
+          }
+        }
+      } 
+    }
+  }
+}

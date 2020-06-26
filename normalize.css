@@ -357,7 +357,7 @@ template {
 .main {
   padding: 16px;
 }
-div[class^="dg_col"] {
+div[class^="dgcol"] {
   background-color: #ddd;
   border: 1px solid #aaa;
   border-radius: 4px;

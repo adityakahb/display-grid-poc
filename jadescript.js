@@ -2,6 +2,39 @@ const jade = require('jade');
 const fs = require('fs');
 const gridJSON = require('./grids.json') || [];
 const grids = [{
+  type: 'fill',
+  container: [
+    {
+      row: [{
+        xs: 'auto'
+      }, {
+        xs: 'auto'
+      }, {
+        xs: 'auto'
+      }, {
+        xs: 'auto'
+      }, {
+        xs: 'auto'
+      }, {
+        xs: 'auto'
+      }]
+    },
+    {
+      row: [{
+        xs: 'auto'
+      }, {
+        xs: 'auto'
+      }]
+    },
+    {
+      row: [{
+        xs: 'auto'
+      }, {
+        xs: 'auto'
+      }]
+    }
+  ]
+}, {
   container: [
     {
       row: [{
@@ -112,67 +145,6 @@ const grids = [{
       }, {
         xs: 9
       }]
-    },
-    {
-      row: [{
-        xs: 4
-      }, {
-        xs: 8
-      }]
-    },
-    {
-      row: [{
-        xs: 5
-      }, {
-        xs: 7
-      }]
-    },
-    {
-      row: [{
-        xs: 6
-      }, {
-        xs: 6
-      }]
-    },
-    {
-      row: [{
-        xs: 7
-      }, {
-        xs: 5
-      }]
-    },
-    {
-      row: [{
-        xs: 8
-      }, {
-        xs: 4
-      }]
-    },
-    {
-      row: [{
-        xs: 9
-      }, {
-        xs: 3
-      }]
-    },
-    {
-      row: [{
-        xs: 10
-      }, {
-        xs: 2
-      }]
-    },
-    {
-      row: [{
-        xs: 11
-      }, {
-        xs: 1
-      }]
-    },
-    {
-      row: [{
-        xs: 12
-      }]
     }
   ]
 }];
@@ -195,22 +167,22 @@ const createJSON = () => {
       for (col of row.row) {
         let carr = [];
         if (col.xs) {
-          carr.push('dg_col-' + col.xs);
+          carr.push('dgcol' + (col.xs === 'auto' ? '' : '-' + col.xs));
         }
         if (col.sm) {
-          carr.push('dg_col-sm-' + col.sm);
+          carr.push('dgcol-sm' + (col.sm === 'auto' ? '' : '-' + col.sm));
         }
         if (col.md) {
-          carr.push('dg_col-md-' + col.md);
+          carr.push('dgcol-md' + (col.md === 'auto' ? '' : '-' + col.md));
         }
         if (col.lg) {
-          carr.push('dg_col-lg-' + col.lg);
+          carr.push('dgcol-lg' + (col.lg === 'auto' ? '' : '-' + col.lg));
         }
         if (col.xl) {
-          carr.push('dg_col-xl-' + col.xl);
+          carr.push('dgcol-xl' + (col.xl === 'auto' ? '' : '-' + col.xl));
         }
         if (col.xxl) {
-          carr.push('dg_col-xxl-' + col.xxl);
+          carr.push('dgcol-xxl' + (col.xxl === 'auto' ? '' : '-' + col.xxl));
         }
         rowObj.push({
           col: '' + carr.join(' ')
@@ -221,6 +193,7 @@ const createJSON = () => {
       });
     }
     gridsArr.push({
+      type: grid.type === 'fill' ? '-fill' : '',
       container: containerArr
     });
   }
